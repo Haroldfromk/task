@@ -18,5 +18,6 @@ struct Constants {
         static var fireTitle = "title"
         static var fireBool = "isComplete"
         static var docuName = "List"
+        static var favBool = "isFav"
     }
 }

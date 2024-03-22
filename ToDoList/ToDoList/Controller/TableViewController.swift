@@ -11,6 +11,7 @@ class TableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     let dbManager = DBManager()
+    let alertManager = AlertManager()
     
     var lists : [ToDoModel] = []
     
@@ -28,7 +29,9 @@ class TableViewController: UIViewController {
         
     }
     
+    
     @IBAction func addListBtn(_ sender: UIBarButtonItem) {
+
         makeAlert()
     }
     
@@ -53,14 +56,14 @@ extension TableViewController : MakingAlert {
     
     func makeAlert () {
         
-        let alert = UIAlertController(title: "할일 등록", message: "내용을 간단하게 입력해주세요.", preferredStyle: .alert)
-        
+        let alert = alertManager.makingAlert(title: "할일 등록", message: "내용을 간단하게 입력해주세요.")
+
         let ok = UIAlertAction(title: "OK", style: .default, handler: { _ in // ok를 눌렀을때 내가 텍스트 필드에 입력한 내용을 등록하게 한다.
             
             self.dbManager.addDB(textfield: alert.textFields?[0].text ?? "Sample")
         })
         
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancel = alertManager.makingCancel(title: "Cancel")
         alert.addTextField { (textField: UITextField!) in // textField 추가
             textField.placeholder = "여기에 입력해주세요"
             textField.autocorrectionType = .no
@@ -83,11 +86,11 @@ extension TableViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! ToDoListCell
         let cellTitle = lists[indexPath.row].title
+        let favBool = lists[indexPath.row].isFav
         
         cell.toDoLabel.text = cellTitle
         cell.finSwitch.isOn = lists[indexPath.row].isComplete
         cell.finSwitch.tag = indexPath.row
-        
         cell.finSwitch.addTarget(self, action: #selector(changeMode), for: .valueChanged)
         
         if cell.finSwitch.isOn == true {
@@ -95,6 +98,13 @@ extension TableViewController : UITableViewDataSource {
         } else {
             cell.toDoLabel.attributedText = cell.toDoLabel.text?.removeStrike()
         }
+        
+        if favBool == true {
+            cell.favView.image = UIImage(systemName: "star.fill")
+        } else {
+            cell.favView.image = UIImage(systemName: "star")
+        }
+        
         
         return cell
     }
@@ -113,29 +123,85 @@ extension TableViewController : UITableViewDataSource {
             dbManager.editSwitch(number: lists[sender.tag].id, isOn: sender.isOn)
             currentCell.toDoLabel.attributedText = currentCell.toDoLabel.text?.removeStrike()
             lists[sender.tag].isComplete = sender.isOn
+            
         }
         
     }
     
-    // MARK: - swipe시 삭제 버튼 구현
+    // MARK: - swipe 구현 (삭제, title 변경)
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deleteBtn = UIContextualAction(style: .normal, title: "Delete") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
             
-            self.dbManager.deleteCell(number: self.lists[indexPath.row].id)
+            let alert = self.alertManager.makingAlert(title: "삭제하기", message: "정말 삭제하실 건가요?")
+
+            let ok = UIAlertAction(title: "OK", style: .destructive, handler: { _ in
+                
+                self.dbManager.deleteCell(number: self.lists[indexPath.row].id)
+                tableView.beginUpdates()
+                self.lists.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.endUpdates()
+                
+            })
             
-            tableView.beginUpdates()
-            self.lists.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.endUpdates()
+            let cancel = self.alertManager.makingCancel(title: "Cancel")
+
+            alert.addAction(ok)
+            alert.addAction(cancel)
+            self.present(alert,animated: false)
+
             success(true)
             
         }
         
+        let editBtn = UIContextualAction(style: .normal, title: "Edit") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+            
+            let alert = UIAlertController(title: "수정하기", message: "수정할 내용을 간단하게 입력해주세요.", preferredStyle: .alert)
+            
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { _ in // ok를 눌렀을때 내가 텍스트 필드에 입력한 내용을 등록하게 한다.
+                
+                self.dbManager.editTitle(number: self.lists[indexPath.row].id, title: alert.textFields?[0].text ?? "Sample")
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            })
+            
+            let cancel = self.alertManager.makingCancel(title: "Cancel")
+            alert.addTextField { (textField: UITextField!) in // textField 추가
+                textField.placeholder = "수정할 내용을 입력하세요."
+                textField.autocorrectionType = .no
+                textField.spellCheckingType = .no
+            }
+            alert.addAction(ok)
+            alert.addAction(cancel)
+            self.present(alert,animated: false)
+            
+            success(true)
+        }
+        
         deleteBtn.backgroundColor = UIColor.systemRed
-        return UISwipeActionsConfiguration(actions: [deleteBtn])
+        editBtn.backgroundColor = UIColor.systemGreen
+        
+        return UISwipeActionsConfiguration(actions: [deleteBtn,editBtn])
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let favBtn = UIContextualAction(style: .normal, title: "") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+            if self.lists[indexPath.row].isFav == false {
+                self.dbManager.editFav(number: self.lists[indexPath.row].id, isFav : true)
+            } else {
+                self.dbManager.editFav(number: self.lists[indexPath.row].id, isFav : false)
+            }
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            success(true)
+        }
+        
+        favBtn.backgroundColor = .init(patternImage: #imageLiteral(resourceName: "Image"))
+        
+        return UISwipeActionsConfiguration(actions: [favBtn])
+    }
     
 }
 

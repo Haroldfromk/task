@@ -8,11 +8,13 @@ class ToDoListCell: UITableViewCell {
     @IBOutlet weak var toDoView: UIView!
     @IBOutlet weak var toDoLabel: UILabel!
     
+    @IBOutlet weak var favView: UIImageView!
     @IBOutlet weak var finSwitch: UISwitch!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         finSwitch.setOn(false, animated: true)
+        favView.image = UIImage(systemName: "star")
         selectionStyle = .none
         
     }
@@ -27,6 +29,7 @@ class ToDoListCell: UITableViewCell {
         super.prepareForReuse()
         finSwitch.setOn(false, animated: false)
         toDoLabel.attributedText = nil
+        favView.image = UIImage(systemName: "star")
         
     }
 }

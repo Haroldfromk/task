@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,13 +19,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hjI-FR-Czf">
-                        <rect key="frame" x="10" y="10" width="320" height="43"/>
+                        <rect key="frame" x="10" y="10" width="320" height="50"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xmk-yc-Xg2">
-                                <rect key="frame" x="0.0" y="0.0" width="256" height="43"/>
+                                <rect key="frame" x="0.0" y="0.0" width="256" height="50"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yS7-il-THL">
+                                        <rect key="frame" x="10" y="9.6666666666666679" width="22" height="29.666666666666661"/>
+                                        <color key="tintColor" name="AccentColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="34" id="236-p4-Nq5"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="34" id="6qs-Jb-PRN"/>
+                                        </constraints>
+                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fsb-DM-HKv">
-                                        <rect key="frame" x="19.000000000000004" y="11.333333333333334" width="41.333333333333343" height="20.333333333333329"/>
+                                        <rect key="frame" x="42" y="10" width="41.333333333333343" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="IAc-ZX-LME"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -32,18 +44,18 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="Fsb-DM-HKv" firstAttribute="leading" secondItem="Xmk-yc-Xg2" secondAttribute="leading" constant="19" id="LmW-yD-UN4"/>
-                                    <constraint firstItem="Fsb-DM-HKv" firstAttribute="centerY" secondItem="Xmk-yc-Xg2" secondAttribute="centerY" id="Ov4-2S-8WV"/>
+                                    <constraint firstAttribute="bottom" secondItem="Fsb-DM-HKv" secondAttribute="bottom" constant="10" id="Cmz-zH-xo6"/>
+                                    <constraint firstAttribute="bottom" secondItem="yS7-il-THL" secondAttribute="bottom" constant="10" id="NsH-af-0AX"/>
+                                    <constraint firstItem="Fsb-DM-HKv" firstAttribute="leading" secondItem="yS7-il-THL" secondAttribute="trailing" constant="10" id="Ysf-ee-Tz9"/>
+                                    <constraint firstItem="Fsb-DM-HKv" firstAttribute="top" secondItem="Xmk-yc-Xg2" secondAttribute="top" constant="10" id="ZzV-WW-q8g"/>
+                                    <constraint firstItem="yS7-il-THL" firstAttribute="top" secondItem="Xmk-yc-Xg2" secondAttribute="top" constant="10" id="vhf-qI-sQ4"/>
+                                    <constraint firstItem="yS7-il-THL" firstAttribute="leading" secondItem="Xmk-yc-Xg2" secondAttribute="leading" constant="10" id="ytP-TW-5oE"/>
                                 </constraints>
                             </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23C-t2-2BC">
-                                <rect key="frame" x="271" y="10" width="51" height="23"/>
+                                <rect key="frame" x="271" y="9.6666666666666679" width="51" height="31.000000000000004"/>
                             </switch>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="23C-t2-2BC" firstAttribute="centerY" secondItem="hjI-FR-Czf" secondAttribute="centerY" id="aME-s4-EmB"/>
-                            <constraint firstItem="23C-t2-2BC" firstAttribute="top" secondItem="hjI-FR-Czf" secondAttribute="top" constant="10" id="nH7-cN-Z5l"/>
-                        </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
@@ -55,14 +67,19 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="favView" destination="yS7-il-THL" id="hxR-Io-U9v"/>
                 <outlet property="finSwitch" destination="23C-t2-2BC" id="Qax-Uo-leK"/>
                 <outlet property="toDoLabel" destination="Fsb-DM-HKv" id="m1K-7f-ElJ"/>
                 <outlet property="toDoView" destination="Xmk-yc-Xg2" id="XHK-Ve-thA"/>
             </connections>
-            <point key="canvasLocation" x="152.67175572519082" y="26.408450704225352"/>
+            <point key="canvasLocation" x="151.14503816793894" y="26.408450704225352"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
+        <namedColor name="AccentColor">
+            <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
