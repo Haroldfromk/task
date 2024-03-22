@@ -22,6 +22,8 @@
 		61D3F3202BABAF72008E51F2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 61D3F31F2BABAF72008E51F2 /* FirebaseAuth */; };
 		61D3F3222BABAF72008E51F2 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 61D3F3212BABAF72008E51F2 /* FirebaseDatabase */; };
 		61D3F3242BABAF72008E51F2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 61D3F3232BABAF72008E51F2 /* FirebaseFirestore */; };
+		61D3F3262BAD30C0008E51F2 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D3F3252BAD30C0008E51F2 /* DBManager.swift */; };
+		61D3F3282BAD3339008E51F2 /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D3F3272BAD3339008E51F2 /* DBModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		61D3F3122BAB26DC008E51F2 /* ToDoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListCell.swift; sourceTree = "<group>"; };
 		61D3F3132BAB26DC008E51F2 /* ToDoListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToDoListCell.xib; sourceTree = "<group>"; };
 		61D3F31B2BABAD35008E51F2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		61D3F3252BAD30C0008E51F2 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		61D3F3272BAD3339008E51F2 /* DBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,7 @@
 			children = (
 				61C35AEA2BA9BCF3002ADA6B /* MainViewController.swift */,
 				61C35AFA2BA9BD34002ADA6B /* TableViewController.swift */,
+				61D3F3252BAD30C0008E51F2 /* DBManager.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -101,6 +106,7 @@
 		61C35AFD2BA9BD43002ADA6B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				61D3F3272BAD3339008E51F2 /* DBModel.swift */,
 				61C35AFE2BA9C164002ADA6B /* ToDoModel.swift */,
 			);
 			path = Model;
@@ -207,7 +213,9 @@
 				61C35AEB2BA9BCF3002ADA6B /* MainViewController.swift in Sources */,
 				61C35AE72BA9BCF3002ADA6B /* AppDelegate.swift in Sources */,
 				61C35AFF2BA9C164002ADA6B /* ToDoModel.swift in Sources */,
+				61D3F3262BAD30C0008E51F2 /* DBManager.swift in Sources */,
 				61C35AE92BA9BCF3002ADA6B /* SceneDelegate.swift in Sources */,
+				61D3F3282BAD3339008E51F2 /* DBModel.swift in Sources */,
 				61C35AFB2BA9BD34002ADA6B /* TableViewController.swift in Sources */,
 				61D3F3112BAB1340008E51F2 /* Constants.swift in Sources */,
 				61D3F3142BAB26DC008E51F2 /* ToDoListCell.swift in Sources */,

@@ -5,76 +5,44 @@ protocol MakingAlert {
 
 
 import UIKit
-import FirebaseFirestore
-
 
 class TableViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let db = Firestore.firestore()
+    let dbManager = DBManager()
     
     var lists : [ToDoModel] = []
     
-    
-    let alert = UIAlertController(title: "ToDoList 추가", message: "간단하게 입력해주세요", preferredStyle: .alert)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dbManager.delegate = self
         
         tableView.register(UINib(nibName: Constants.cellName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
         
         tableView.dataSource = self
         tableView.delegate = self
         
-        getData()
+        dbManager.getData()
+        
     }
     
     @IBAction func addListBtn(_ sender: UIBarButtonItem) {
         makeAlert()
     }
     
-    // MARK: - DB로부터 값을 가져온다.
-    func getData () {
-        
-        db.collection(Constants.collectionName).order(by: Constants.Fire.fireId)
-            .addSnapshotListener { (querySnapshot, error) in
-                
-                self.lists = []
-                
-                if let e = error {
-                    print("error : \(e)")
-                } else {
-                    if let snapshotDocuments = querySnapshot?.documents {
-                        for doc in snapshotDocuments {
-                            let data = doc.data()
-                            if let listId = data[Constants.Fire.fireId] as? Int
-                                , let listTitle = data[Constants.Fire.fireTitle] as? String
-                                , let listBool = data[Constants.Fire.fireBool] as? Bool {
-                                let list = ToDoModel(id: listId, title: listTitle, isComplete: listBool)
-                                
-                                self.lists.append(list)
-                                
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData()
-                                }
-                            }
-                            
-                        }
-                    }
-                }
-            }
-    }
+}
+
+// MARK: - DBManager로 부터 받아온 DB를 lists에 저장 및 화면에 표시
+
+extension TableViewController : sendLists {
     
-    // MARK: - id 최댓값을 가져온다.
-    func getID () -> Int {
-        
-        if lists.count != 0 {
-            return self.lists[lists.count-1].id + 1
-        } else {
-            return 0
+    func sendDB(data: [ToDoModel]) {
+        lists = data
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
-        
     }
     
 }
@@ -89,13 +57,7 @@ extension TableViewController : MakingAlert {
         
         let ok = UIAlertAction(title: "OK", style: .default, handler: { _ in // ok를 눌렀을때 내가 텍스트 필드에 입력한 내용을 등록하게 한다.
             
-            self.db.collection(Constants.collectionName).addDocument(data: [Constants.Fire.fireId : self.getID(), Constants.Fire.fireTitle : alert.textFields?[0].text ?? "Sample", Constants.Fire.fireBool : false]) { (error) in
-                if let e = error { // DB에 업로드중 에러 발생시
-                    print("error : \(e.localizedDescription)")
-                } else { // 업로드가 성공하면 콘솔로 알려준다.
-                    print("Upload Done")
-                }
-            }
+            self.dbManager.addDB(textfield: alert.textFields?[0].text ?? "Sample")
         })
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
@@ -109,7 +71,6 @@ extension TableViewController : MakingAlert {
         self.present(alert,animated: false)
     }
 }
-
 
 // MARK: - TableView 구현
 extension TableViewController : UITableViewDataSource {
@@ -144,33 +105,12 @@ extension TableViewController : UITableViewDataSource {
         
         // switch를 조작했을때의 cell을 가져온다.
         if sender.isOn {
-            db.collection(Constants.collectionName).whereField("id",isEqualTo: lists[sender.tag].id).getDocuments { (querySnapshot, error) in
-                if let e = error {
-                    print(e)
-                } else {
-                    if let documents = querySnapshot?.documents {
-                        for doc in documents {
-                            let docuId = doc.documentID
-                            self.db.collection(Constants.collectionName).document(docuId).setData([Constants.Fire.fireBool : sender.isOn],merge: true)
-                        }
-                    }
-                }
-            }
+            dbManager.editSwitch(number: lists[sender.tag].id, isOn: sender.isOn)
             currentCell.toDoLabel.attributedText = currentCell.toDoLabel.text?.strikeThrough() // 취소선
             lists[sender.tag].isComplete = sender.isOn // DB를 로컬에 저장한 lists에도 반영
+            
         } else {
-            db.collection(Constants.collectionName).whereField("id",isEqualTo: lists[sender.tag].id).getDocuments { (querySnapshot, error) in
-                if let e = error {
-                    print(e)
-                } else {
-                    if let documents = querySnapshot?.documents {
-                        for doc in documents {
-                            let docuId = doc.documentID
-                            self.db.collection(Constants.collectionName).document(docuId).setData([Constants.Fire.fireBool : sender.isOn],merge: true)
-                        }
-                    }
-                }
-            }
+            dbManager.editSwitch(number: lists[sender.tag].id, isOn: sender.isOn)
             currentCell.toDoLabel.attributedText = currentCell.toDoLabel.text?.removeStrike()
             lists[sender.tag].isComplete = sender.isOn
         }
@@ -182,18 +122,7 @@ extension TableViewController : UITableViewDataSource {
         
         let deleteBtn = UIContextualAction(style: .normal, title: "Delete") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
             
-            self.db.collection(Constants.collectionName).whereField("id",isEqualTo:self.lists[indexPath.row].id).getDocuments { (querySnapshot, error) in
-                if let e = error {
-                    print(e)
-                } else {
-                    if let documents = querySnapshot?.documents {
-                        for doc in documents {
-                            let docuId = doc.documentID
-                            self.db.collection(Constants.collectionName).document(docuId).delete()
-                        }
-                    }
-                }
-            }
+            self.dbManager.deleteCell(number: self.lists[indexPath.row].id)
             
             tableView.beginUpdates()
             self.lists.remove(at: indexPath.row)

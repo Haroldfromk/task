@@ -27,5 +27,6 @@ class ToDoListCell: UITableViewCell {
         super.prepareForReuse()
         finSwitch.setOn(false, animated: false)
         toDoLabel.attributedText = nil
+        
     }
 }
