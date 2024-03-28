@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "edit-date-calendar-icon.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

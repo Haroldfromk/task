@@ -11,8 +11,11 @@ class ToDoListCell: UITableViewCell {
     @IBOutlet weak var favView: UIImageView!
     @IBOutlet weak var finSwitch: UISwitch!
     
+   
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         finSwitch.setOn(false, animated: true)
         favView.image = UIImage(systemName: "star")
         selectionStyle = .none
@@ -31,5 +34,7 @@ class ToDoListCell: UITableViewCell {
         toDoLabel.attributedText = nil
         favView.image = UIImage(systemName: "star")
         
+    }
+    @IBAction func uploadImageBtnPressed(_ sender: UIButton) {
     }
 }

@@ -1,9 +1,4 @@
-//
-//  Constants.swift
-//  ToDoList
-//
-//  Created by Dongik Song on 3/20/24.
-//
+
 
 import Foundation
 
@@ -19,5 +14,16 @@ struct Constants {
         static var fireBool = "isComplete"
         static var docuName = "List"
         static var favBool = "isFav"
+        static var fireImageTitle = "imageTitle"
+        static var fireDate = "date"
+    }
+    
+    struct Symbol {
+        static var star = "star"
+        static var fillStar = "star.fill"
+    }
+    
+    struct Side {
+        static var identifier = "SideCell"
     }
 }

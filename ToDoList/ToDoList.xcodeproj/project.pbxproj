@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		618C1BC92BB2064C00DD2889 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 618C1BC82BB2064C00DD2889 /* FirebaseStorage */; };
+		618C1BCB2BB2579B00DD2889 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C1BCA2BB2579B00DD2889 /* ImageManager.swift */; };
+		618C1BEF2BB3764000DD2889 /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C1BEE2BB3764000DD2889 /* SideBarViewController.swift */; };
+		61972C502BAEF8DF001FCDE3 /* CellDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61972C4F2BAEF8DF001FCDE3 /* CellDetailViewController.swift */; };
 		61C35AE72BA9BCF3002ADA6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C35AE62BA9BCF3002ADA6B /* AppDelegate.swift */; };
 		61C35AE92BA9BCF3002ADA6B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C35AE82BA9BCF3002ADA6B /* SceneDelegate.swift */; };
 		61C35AEB2BA9BCF3002ADA6B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C35AEA2BA9BCF3002ADA6B /* MainViewController.swift */; };
@@ -28,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		618C1BCA2BB2579B00DD2889 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		618C1BEE2BB3764000DD2889 /* SideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
+		61972C4F2BAEF8DF001FCDE3 /* CellDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDetailViewController.swift; sourceTree = "<group>"; };
 		61C35AE32BA9BCF3002ADA6B /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61C35AE62BA9BCF3002ADA6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61C35AE82BA9BCF3002ADA6B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +60,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61D3F3222BABAF72008E51F2 /* FirebaseDatabase in Frameworks */,
+				618C1BC92BB2064C00DD2889 /* FirebaseStorage in Frameworks */,
 				61D3F3202BABAF72008E51F2 /* FirebaseAuth in Frameworks */,
 				61D3F3242BABAF72008E51F2 /* FirebaseFirestore in Frameworks */,
 			);
@@ -100,8 +108,11 @@
 			children = (
 				61C35AEA2BA9BCF3002ADA6B /* MainViewController.swift */,
 				61C35AFA2BA9BD34002ADA6B /* TableViewController.swift */,
+				61972C4F2BAEF8DF001FCDE3 /* CellDetailViewController.swift */,
+				618C1BEE2BB3764000DD2889 /* SideBarViewController.swift */,
 				61D3F3252BAD30C0008E51F2 /* DBManager.swift */,
 				61D3F3292BAD6A8A008E51F2 /* AlertManager.swift */,
+				618C1BCA2BB2579B00DD2889 /* ImageManager.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -152,6 +163,7 @@
 				61D3F31F2BABAF72008E51F2 /* FirebaseAuth */,
 				61D3F3212BABAF72008E51F2 /* FirebaseDatabase */,
 				61D3F3232BABAF72008E51F2 /* FirebaseFirestore */,
+				618C1BC82BB2064C00DD2889 /* FirebaseStorage */,
 			);
 			productName = ToDoList;
 			productReference = 61C35AE32BA9BCF3002ADA6B /* ToDoList.app */;
@@ -216,11 +228,14 @@
 				61C35AEB2BA9BCF3002ADA6B /* MainViewController.swift in Sources */,
 				61C35AE72BA9BCF3002ADA6B /* AppDelegate.swift in Sources */,
 				61D3F32A2BAD6A8A008E51F2 /* AlertManager.swift in Sources */,
+				618C1BCB2BB2579B00DD2889 /* ImageManager.swift in Sources */,
 				61C35AFF2BA9C164002ADA6B /* ToDoModel.swift in Sources */,
 				61D3F3262BAD30C0008E51F2 /* DBManager.swift in Sources */,
 				61C35AE92BA9BCF3002ADA6B /* SceneDelegate.swift in Sources */,
 				61D3F3282BAD3339008E51F2 /* DBModel.swift in Sources */,
 				61C35AFB2BA9BD34002ADA6B /* TableViewController.swift in Sources */,
+				618C1BEF2BB3764000DD2889 /* SideBarViewController.swift in Sources */,
+				61972C502BAEF8DF001FCDE3 /* CellDetailViewController.swift in Sources */,
 				61D3F3112BAB1340008E51F2 /* Constants.swift in Sources */,
 				61D3F3142BAB26DC008E51F2 /* ToDoListCell.swift in Sources */,
 			);
@@ -377,6 +392,7 @@
 				DEVELOPMENT_TEAM = LA95MXQ3R5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDoList/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to upload photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -405,6 +421,7 @@
 				DEVELOPMENT_TEAM = LA95MXQ3R5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDoList/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to upload photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -458,6 +475,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		618C1BC82BB2064C00DD2889 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 61D3F31D2BABAE30008E51F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		61D3F31F2BABAF72008E51F2 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 61D3F31D2BABAE30008E51F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
